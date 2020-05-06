@@ -6,5 +6,5 @@
 - 数据可视化 ECharts
 
 ## 后台管理界面（使用layui搭建）
-![课程信息页]()  
-![数据可视化页]()
+![课程信息页](https://github.com/birdguan/crm/blob/master/img/courseinfo.png)  
+![数据可视化页](https://github.com/birdguan/crm/blob/master/img/income.png)
