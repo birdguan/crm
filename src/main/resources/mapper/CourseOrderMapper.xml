@@ -57,4 +57,14 @@
         WHERE
         order_id = #{order_id};
     </update>
+
+    <select id="getMonthIncomes" resultType="monthIncome">
+        SELECT
+        LEFT(order_date, 7) as date,
+        count(*) as total,
+        SUM(CONVERT(course_price, DECIMAL(18, 2))) as income
+        FROM t_course_order
+        GROUP BY LEFT(order_date, 7)
+         ORDER BY LEFT(order_date, 7);
+    </select>
 </mapper>

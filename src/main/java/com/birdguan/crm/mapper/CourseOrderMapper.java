@@ -1,6 +1,7 @@
 package com.birdguan.crm.mapper;
 
 import com.birdguan.crm.model.CourseOrder;
+import com.birdguan.crm.model.MonthIncome;
 
 import java.util.List;
 import java.util.Map;
@@ -13,4 +14,6 @@ public interface CourseOrderMapper {
     public CourseOrder findByOrderId(String order_id);
     public void deleteByOrderId(String order_id);
     public void update(CourseOrder order);
+
+    public List<MonthIncome> getMonthIncomes();
 }

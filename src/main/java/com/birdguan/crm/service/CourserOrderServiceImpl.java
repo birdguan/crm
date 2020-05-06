@@ -2,6 +2,7 @@ package com.birdguan.crm.service;
 
 import com.birdguan.crm.mapper.CourseOrderMapper;
 import com.birdguan.crm.model.CourseOrder;
+import com.birdguan.crm.model.MonthIncome;
 import com.birdguan.crm.model.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,6 +52,11 @@ public class CourserOrderServiceImpl implements CourseOrderService {
     @Override
     public void update(CourseOrder order) {
         orderMapper.update(order);
+    }
+
+    @Override
+    public List<MonthIncome> getMonthIncomes() {
+        return orderMapper.getMonthIncomes();
     }
 
 
