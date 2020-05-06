@@ -22,10 +22,30 @@ public class CourserOrderServiceImpl implements CourseOrderService {
         result.setCode(0);
 
         Map<String, Object> params = new HashMap<>();
+        params.put("start", (page-1) * pageSize);
+        params.put("limit", pageSize);
         // 获取总记录数
         int count = orderMapper.findCountByMap(params);
+        result.setCount(count);
         List<CourseOrder> list = orderMapper.findListByMap(params);
         result.setData(list);
         return result;
     }
+
+    @Override
+    public void save(CourseOrder order) {
+        orderMapper.insert(order);
+    }
+
+    @Override
+    public CourseOrder findByOrderId(String order_id) {
+        return orderMapper.findByOrderId(order_id);
+    }
+
+    @Override
+    public void deleteByOrderId(String order_id) {
+        orderMapper.deleteByOrderId(order_id);
+    }
+
+
 }
