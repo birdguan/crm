@@ -25,7 +25,7 @@ public class CourseOrderController {
      */
     @RequestMapping("/list")
     public String list() {
-        return "courseorder/list";
+        return "/courseorder/list";
     }
 
     /**
@@ -34,7 +34,7 @@ public class CourseOrderController {
      */
     @RequestMapping("/add")
     public String add() {
-        return "courseorder/add";
+        return "/courseorder/add";
     }
 
     /**
@@ -45,7 +45,7 @@ public class CourseOrderController {
     public String detail(Model model, String order_id) {
         CourseOrder order = orderService.findByOrderId(order_id);
         model.addAttribute("order", order);
-        return "courseorder/detail";
+        return "/courseorder/detail";
     }
 
     /**
@@ -53,15 +53,20 @@ public class CourseOrderController {
      * @param order
      * @return
      */
-    @RequestMapping("save")
+    @RequestMapping("/save")
     @ResponseBody
     public CURDResult save(CourseOrder order) {
+        if (order.getOrder_id() == null || order.getOrder_id().length() == 0) {
+            orderService.save(order);
+        } else {
+            orderService.update(order);
+        }
         CURDResult result = new CURDResult();
-        orderService.save(order);
+
         return result;
     }
 
-    @RequestMapping("delete")
+    @RequestMapping("/delete")
     @ResponseBody
     public CURDResult delete(String order_id) {
         CURDResult result = new CURDResult();
@@ -69,10 +74,17 @@ public class CourseOrderController {
         return result;
     }
 
+    @RequestMapping("/edit")
+    public String edit(Model model, String order_id) {
+        CourseOrder order = orderService.findByOrderId(order_id);
+        model.addAttribute("order", order);
+        return "/courseorder/edit";
+    }
+
     @RequestMapping("/listjson")
     @ResponseBody
-    public PageResult<CourseOrder> listJson(int page, int limit) {
-        PageResult<CourseOrder> result = orderService.findPageResult(null, page, limit);
+    public PageResult<CourseOrder> listJson(CourseOrder condition, int page, int limit) {
+        PageResult<CourseOrder> result = orderService.findPageResult(condition, page, limit);
         return result;
     }
 }

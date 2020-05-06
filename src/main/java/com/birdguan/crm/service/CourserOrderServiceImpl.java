@@ -22,6 +22,7 @@ public class CourserOrderServiceImpl implements CourseOrderService {
         result.setCode(0);
 
         Map<String, Object> params = new HashMap<>();
+        params.put("condition", condition); // 模糊查询条件
         params.put("start", (page-1) * pageSize);
         params.put("limit", pageSize);
         // 获取总记录数
@@ -45,6 +46,11 @@ public class CourserOrderServiceImpl implements CourseOrderService {
     @Override
     public void deleteByOrderId(String order_id) {
         orderMapper.deleteByOrderId(order_id);
+    }
+
+    @Override
+    public void update(CourseOrder order) {
+        orderMapper.update(order);
     }
 
 
