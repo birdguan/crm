@@ -54,6 +54,7 @@
             <div class="layui-input-inline">
                 <select name="course_name"  lay-search="" >
                     <option value="">直接选择或搜索选择</option>
+                    <p th:value="${categoryList}"></p>
                     <option th:each="category : ${categoryList}"
                             th:value="${category.course_name}"
                             th:text="${category.course_name}"></option>

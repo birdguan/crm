@@ -53,7 +53,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">购买课程</label>
             <div class="layui-input-inline">
-                <select name="course_name"  lay-search="" id="">
+                <select name="course_name"  lay-search="" id="course_name">
                     <option value="">直接选择或搜索选择</option>
                     <option th:each="category : ${categoryList}"
                             th:value="${category.course_name}"
@@ -85,7 +85,7 @@
 
 
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
-<script th:inline="none">
+<script th:inline="javascript">
     var $,layer;
     layui.use(['form','laydate'], function(){
         var laydate = layui.laydate;
@@ -97,10 +97,9 @@
         });
 
         // 设置select默认课程选中效果
-        var course_name_value = [[${order.course_name}]];
-        var select = 'dd[lay-value=' + course_name_value + ']';
+        var course_name_value = [[${order.course_name}]];//取到当前页面的课程名称
+        var select = 'dd[lay-value=' + course_name_value + ']';//属性选择器
         $('#course_name').siblings("div.layui-form-select").find('dl').find(select).click();
-
     });
 
 

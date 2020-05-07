@@ -1,8 +1,10 @@
 package com.birdguan.crm.web.controller;
 
 import com.birdguan.crm.model.CURDResult;
+import com.birdguan.crm.model.CourseCategory;
 import com.birdguan.crm.model.CourseOrder;
 import com.birdguan.crm.model.PageResult;
+import com.birdguan.crm.service.CourseCategoryService;
 import com.birdguan.crm.service.CourseOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -18,6 +19,9 @@ import java.util.List;
 public class CourseOrderController {
     @Autowired
     CourseOrderService orderService;
+
+    @Autowired
+    CourseCategoryService categoryService;
 
     /**
      * 课程详情列表
@@ -33,7 +37,9 @@ public class CourseOrderController {
      * @return
      */
     @RequestMapping("/add")
-    public String add() {
+    public String add(Model model) {
+        List<CourseCategory> categoryList = categoryService.findAllList();
+        model.addAttribute("categoryList", categoryList);
         return "/courseorder/add";
     }
 
@@ -77,7 +83,9 @@ public class CourseOrderController {
     @RequestMapping("/edit")
     public String edit(Model model, String order_id) {
         CourseOrder order = orderService.findByOrderId(order_id);
+        List<CourseCategory> categoryList = categoryService.findAllList();
         model.addAttribute("order", order);
+        model.addAttribute("categoryList", categoryList);
         return "/courseorder/edit";
     }
 
