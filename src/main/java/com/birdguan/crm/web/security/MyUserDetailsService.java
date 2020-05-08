@@ -2,12 +2,18 @@ package com.birdguan.crm.web.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Configuration
 public class MyUserDetailsService implements UserDetailsService {
@@ -27,6 +33,19 @@ public class MyUserDetailsService implements UserDetailsService {
         String pwd = passwordEncoder.encode("123456");
         return new User(username,
                 pwd, //密码是从数据库获取，需要加密器进行加密
-                AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER"));
+                getCurrentUserAuthorities());
+    }
+
+    /**
+     * 获取当前用户拥有的权限
+     * @return
+     */
+    public Collection<? extends GrantedAuthority> getCurrentUserAuthorities() {
+        List<GrantedAuthority> list = new ArrayList<>();
+        list.add(new SimpleGrantedAuthority("COURSEORDER_READ"));
+        list.add(new SimpleGrantedAuthority("COURSEORDER_DELETE"));
+        list.add(new SimpleGrantedAuthority("COURSEORDER_ADD"));
+        list.add(new SimpleGrantedAuthority("COURSEORDER_EDIT"));
+        return list;
     }
 }

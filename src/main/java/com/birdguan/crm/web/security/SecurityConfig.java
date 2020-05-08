@@ -10,19 +10,28 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  */
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests()
-//                    .antMatchers("/login").permitAll()
-//                    .anyRequest().authenticated()
-//                    .and()
-//                .formLogin()
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .headers().
+                    frameOptions().sameOrigin().httpStrictTransportSecurity().disable()
+                    .and()
+                .authorizeRequests()
+                    .antMatchers("/courseorder/list", "/courseorder/detail", "/courseorder/listjson")
+                        .hasAnyAuthority("COURSEORDER_READ")
+                    .antMatchers("/courseorder/add").hasAnyAuthority("COURSEORDER_ADD")
+                    .antMatchers("/courseorder/delete").hasAnyAuthority("COURSEORDER_DELETE")
+                    .antMatchers("/courseorder/save").hasAnyAuthority("COURSEORDER_SAVE")
+                    .antMatchers("/courdeorder/edit").hasAnyAuthority("COURSEORDER_EDIT")
+                    .antMatchers("/login").permitAll()
+                    .anyRequest().authenticated()
+                    .and()
+                .formLogin()
 //                    .loginPage("/login")
 //                    .failureUrl("/login-error")
-//                    .permitAll()
-//                .and()
-//                    .logout()
-//                    .permitAll();
-//    }
+                    .permitAll()
+                    .and()
+                .logout()
+                    .permitAll();
+    }
 }
