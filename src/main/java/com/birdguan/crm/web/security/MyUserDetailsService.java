@@ -33,6 +33,7 @@ public class MyUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // 1. 根据用户名从数据库查找有没有这个用户信息
         com.birdguan.crm.model.User dbUser = userService.findByUsername(username);
+        System.out.println("username: " + username + ", userbody: " + dbUser);
         if (dbUser == null) return null;
         // 2. 如果有用户信息，返回一个User对象
         String pwd = passwordEncoder.encode(dbUser.getPassword());
